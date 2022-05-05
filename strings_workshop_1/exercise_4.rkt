@@ -1,7 +1,8 @@
 #lang racket
 
+; Point 1 convert from lowercase to uppercase
 (define (Uppercase i str)
-	(if (< i (string-length str))
+    (if (< i (string-length str))
 		(if (and (>= (char->integer (string-ref str i)) 97) (<= (char->integer (string-ref str i)) 122))
 			(begin
 				(string-set! str i (integer->char (- (char->integer (string-ref str i)) 32)))
@@ -13,6 +14,7 @@
 	)
 )
 
+; Point 2 convert from uppercase to lowercase
 (define (Lowercase i str)
 	(if (< i (string-length str))
 		(if (and (>= (char->integer (string-ref str i)) 65) (<= (char->integer (string-ref str i)) 90))
@@ -26,6 +28,7 @@
 	)
 )
 
+; Point 3 extract a fragment from the text
 (define (Fragment i str p1 p2 sub_string)
 	(if (<= p1 p2)
 		(begin
@@ -55,6 +58,7 @@
 	)
 )
 
+; Point 4 delete spaces from the text
 (define (DeleteSpace i str)
 	(if (< i (- (string-length str) 1))
 		(begin
@@ -78,13 +82,14 @@
 	)
 )
 
+;Point 5 add a string to the text
 (define (AddString i counter str1 str2 final_string)
 	(if (< i (string-length str1))
 		(begin
 			(string-set! final_string i (string-ref str1 i))
 			(AddString (+ i 1) counter str1 str2 final_string)
 		)
-		(if (< i (string-length str2))
+		(if (< i (string-length final_string))
 			(begin
 				(string-set! final_string i (string-ref str2 counter))
 				(AddString (+ i 1) (+ counter 1) str1 str2 final_string)
@@ -96,29 +101,28 @@
 
 (define (GetNewString str)
 	(define new_string 0)
-	(printf "Please enter a text to add it: ")
-	(set! new_string (read-line))
+	(printf "Please enter a text to add it (Use double quotation marks): ")
+	(set! new_string (read))
 	(AddString 0 0 str new_string (make-string (+ (string-length str) (string-length new_string))))
 )
 
+;Point 6 Show times that appears a substring
 (define (CompareSubString i p str sub_string flag)
 	(if (< i (string-length sub_string))
-		(if (char=? (string-ref str p) (string-ref sub_string i))
-			(begin
-				(set! flag 1)
-				(CompareSubString (+ i 1) (+ p 1) str sub_string)
-			)
+		(if (char=? (string-ref sub_string i) (string-ref str p))
+			(CompareSubString (+ i 1) (+ p 1) str sub_string 1)
 			(set! flag 0)
 		)
-		flag
+		(void)
 	)
+	flag
 )
 
 (define (SearchSubString i str sub_string n)
-	(if (< i (string-length str))
-		(if (char=? (string-ref str i) (string-ref str 0))
+	(if (< i (- (string-length str) 1))
+		(if (char=? (string-ref str i) (string-ref sub_string i))
 			(set! n (+ n (CompareSubString 1 (+ i 1) str sub_string 0)))
-			(void)
+			(SearchSubString (+ i 1) str sub_string n)
 		)
 		(printf "That sub string is ~a times in the text.\n" n)
 	)
