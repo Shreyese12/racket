@@ -110,7 +110,10 @@
 (define (CompareSubString i p str sub_string flag)
 	(if (< i (string-length sub_string))
 		(if (char=? (string-ref sub_string i) (string-ref str p))
-			(CompareSubString (+ i 1) (+ p 1) str sub_string 1)
+			(begin
+				(set! flag 1)
+				(CompareSubString (+ i 1) (+ p 1) str sub_string flag)
+			)
 			(set! flag 0)
 		)
 		(void)
@@ -120,8 +123,11 @@
 
 (define (SearchSubString i str sub_string n)
 	(if (< i (- (string-length str) 1))
-		(if (char=? (string-ref str i) (string-ref sub_string i))
-			(set! n (+ n (CompareSubString 1 (+ i 1) str sub_string 0)))
+		(if (char=? (string-ref str i) (string-ref sub_string 0))
+			(begin
+				(set! n (+ n (CompareSubString 1 (+ i 1) str sub_string 0)))
+				(SearchSubString (+ i 1) str sub_string n)
+			)
 			(SearchSubString (+ i 1) str sub_string n)
 		)
 		(printf "That sub string is ~a times in the text.\n" n)
