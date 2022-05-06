@@ -31,7 +31,10 @@
                     (string-set! str i (integer->char (+ (- (char->integer (string-ref str i)) 26) seed)))
                     (EncryptUppercase (+ i 1) seed str)
                 )
-                (EncryptLowercase i seed str)
+                (begin
+                    (EncryptLowercase i seed str)
+                    (EncryptUppercase (+ i 1) seed str)
+                )
             )
         )
         (void)
