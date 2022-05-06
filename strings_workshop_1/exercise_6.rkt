@@ -27,8 +27,8 @@
     (define str 0)
 	(define char 0)
 
-	(printf "Please enter a string: ")
-	(set! str (read-line))
+	(printf "Please enter a string (Use double quotation marks): ")
+	(set! str (read))
 	(printf "Please enter a character to delete: ")
 	(set! char (read))
 

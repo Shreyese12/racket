@@ -137,7 +137,7 @@
 (define (GetSubString str)
 	(define sub_string 0)
 	
-	(printf "Please enter a sub string to search: ")
+	(printf "Please enter a sub string to search (Use double quotation marks): ")
 	(set! sub_string (read))
 
 	(if (string? sub_string)
