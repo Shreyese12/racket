@@ -28,7 +28,7 @@
         (begin
             (set! l1 (Fill size l1))
             (printf "~a\n" l1)
-            (printf "-> ~a\n" (BiggestNumber size 0 l1))
+            (printf "This is the biggest number in the list: ~a\n" (BiggestNumber size 0 l1))
         )
         (begin
             (printf "Invalid number.\n")
