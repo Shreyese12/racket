@@ -33,7 +33,7 @@
         )
     )
 
-    (printf "Please ente a word: ")
+    (printf "Please ente a word (Use double quotation marks): ")
     (set! word (read))
 
     (if (string? word)
